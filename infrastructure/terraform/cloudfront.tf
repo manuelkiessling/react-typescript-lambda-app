@@ -29,7 +29,7 @@ resource "aws_cloudfront_origin_request_policy" "api_gateway_optimized" {
   headers_config {
     header_behavior = "whitelist"
     headers {
-      items = ["Accept-Charset", "Accept", "User-Agent", "Referer", "X-Herodot-Webapp-Api-Key-Id"]
+      items = ["Accept-Charset", "Accept", "User-Agent", "Referer"]
     }
   }
 
@@ -74,9 +74,13 @@ resource "aws_cloudfront_distribution" "default" {
 
   origin {
     domain_name = replace(
-    replace(aws_apigatewayv2_stage.default_api.invoke_url, "https://", ""),
-    "/api",
-    ""
+      replace(
+        aws_apigatewayv2_stage.default_api.invoke_url,
+        "https://",
+        ""
+      ),
+      "/api",
+      ""
     )
     origin_id = "api-gateway-default"
     custom_origin_config {

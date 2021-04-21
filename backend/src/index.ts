@@ -3,7 +3,7 @@ import { AWSError } from 'aws-sdk';
 import { ScanOutput } from 'aws-sdk/clients/dynamodb';
 
 const AWS = require('aws-sdk');
-AWS.config.update({ region: 'eu-central-1' });
+AWS.config.update({ region: 'us-east-1' });
 const docClient = new AWS.DynamoDB.DocumentClient();
 
 const handleGetNotesRequest = async () => {

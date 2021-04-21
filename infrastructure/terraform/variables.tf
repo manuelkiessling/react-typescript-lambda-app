@@ -1,8 +1,9 @@
 variable "project_name" {
   type    = string
-  default = "kiessling-rtla"
+  default = "mk-rtla"
 }
 
 variable "deployment_number" {
-  type = string
+  type    = string
+  default = "initial"
 }
