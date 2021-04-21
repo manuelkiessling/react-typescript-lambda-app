@@ -14,17 +14,17 @@ resource "aws_apigatewayv2_stage" "default_api" {
   }
 }
 
-resource "aws_apigatewayv2_integration" "lambda_rest_apis_default" {
+resource "aws_apigatewayv2_integration" "lambda_rest_api" {
   api_id           = aws_apigatewayv2_api.default.id
   integration_type = "AWS_PROXY"
 
   integration_method = "POST"
-  integration_uri    = aws_lambda_function.rest_apis_default.invoke_arn
+  integration_uri    = aws_lambda_function.rest_api.invoke_arn
 }
 
 resource "aws_apigatewayv2_route" "example" {
   api_id    = aws_apigatewayv2_api.default.id
   route_key = "ANY /{proxy+}"
 
-  target = "integrations/${aws_apigatewayv2_integration.lambda_rest_apis_default.id}"
+  target = "integrations/${aws_apigatewayv2_integration.lambda_rest_api.id}"
 }
