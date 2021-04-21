@@ -4,5 +4,5 @@ variable "project_name" {
 }
 
 variable "deployment_number" {
-  type    = string
+  type = string
 }

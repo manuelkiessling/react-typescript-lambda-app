@@ -1,0 +1,12 @@
+{
+  "name": "react-typescript-lambda-app-backend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@types/aws-lambda": "^8.10.75",
+    "typescript": "^4.2.4"
+  },
+  "scripts": {
+    "build": "rm -rf build && tsc --build tsconfig.json && pushd build && zip rest_api.zip ./* && popd"
+  }
+}
