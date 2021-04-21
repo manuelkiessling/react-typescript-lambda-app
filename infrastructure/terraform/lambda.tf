@@ -54,7 +54,8 @@ resource "aws_iam_policy" "dynamodb_default" {
                 "dynamodb:PutItem",
                 "dynamodb:GetItem",
                 "dynamodb:Query",
-                "dynamodb:GetRecords"
+                "dynamodb:GetRecords",
+                "dynamodb:Scan"
             ],
             "Resource": [
                 "${aws_dynamodb_table.notes.arn}"

@@ -43,5 +43,5 @@ popd || exit
 
 pushd "$DIR/../infrastructure/terraform" || exit
   terraform-0.15.0 init
-  terraform-0.15.0 apply -var deployment_number="$DEPLOYMENT_NUMBER"
+  terraform-0.15.0 apply -auto-approve -var deployment_number="$DEPLOYMENT_NUMBER"
 popd || exit
