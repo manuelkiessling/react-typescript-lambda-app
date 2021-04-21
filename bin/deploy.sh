@@ -28,6 +28,8 @@ pushd "$DIR/../frontend" || exit
   aws s3 cp --recursive --acl public-read build/ "s3://$PROJECT_NAME-frontend/"
 popd || exit
 
+[ "$1" == "frontend" ] && exit 0
+
 pushd "$DIR/../backend/" || exit
   rm -rf build
   rm -rf node_modules
