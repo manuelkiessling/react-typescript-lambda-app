@@ -17,7 +17,7 @@ fi
 DEPLOYMENT_NUMBER="$(date -u +%FT%TZ)"
 echo "$DEPLOYMENT_NUMBER" > "$DIR/../deployment_number"
 
-PROJECT_NAME="$(cat "$DIR/../infrastructure/terraform/variables.tf" | grep 'project_name' -A 2 | grep 'default' | cut -d '=' -f 2 | cut -d '"' -f 2)"
+PROJECT_NAME="$(cat "$DIR/../terraform/variables.tf" | grep 'project_name' -A 2 | grep 'default' | cut -d '=' -f 2 | cut -d '"' -f 2)"
 
 pushd "$DIR/../frontend" || exit
   rm -rf build
@@ -43,7 +43,7 @@ pushd "$DIR/../backend/" || exit
   popd || exit
 popd || exit
 
-pushd "$DIR/../infrastructure/terraform" || exit
+pushd "$DIR/../terraform" || exit
   terraform-0.15.0 init
   terraform-0.15.0 apply -auto-approve -var deployment_number="$DEPLOYMENT_NUMBER"
 popd || exit
