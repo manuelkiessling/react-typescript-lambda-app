@@ -1,3 +1,16 @@
+resource "aws_lambda_function" "rest_api" {
+  function_name = "rest_api"
+
+  s3_bucket = aws_s3_bucket.backend.bucket
+  s3_key    = "${var.deployment_number}/rest_api.zip"
+
+  handler = "index.handler"
+  runtime = "nodejs14.x"
+
+  role = aws_iam_role.lambda_rest_api.arn
+}
+
+
 resource "aws_iam_role" "lambda_rest_api" {
   name = "lambda_rest_api"
 
@@ -17,18 +30,6 @@ resource "aws_iam_role" "lambda_rest_api" {
 }
 EOF
 
-}
-
-resource "aws_lambda_function" "rest_api" {
-  function_name = "rest_api"
-
-  s3_bucket = aws_s3_bucket.backend.bucket
-  s3_key    = "${var.deployment_number}/rest_api.zip"
-
-  handler = "index.handler"
-  runtime = "nodejs14.x"
-
-  role = aws_iam_role.lambda_rest_api.arn
 }
 
 

@@ -22,7 +22,7 @@ resource "aws_apigatewayv2_integration" "lambda_rest_api" {
   integration_uri    = aws_lambda_function.rest_api.invoke_arn
 }
 
-resource "aws_apigatewayv2_route" "example" {
+resource "aws_apigatewayv2_route" "proxy" {
   api_id    = aws_apigatewayv2_api.default.id
   route_key = "ANY /{proxy+}"
 
