@@ -28,3 +28,12 @@ resource "aws_apigatewayv2_route" "proxy" {
 
   target = "integrations/${aws_apigatewayv2_integration.lambda_rest_api.id}"
 }
+
+resource "aws_lambda_permission" "rest_api" {
+  statement_id  = "AllowAPIGatewayInvoke"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.rest_api.function_name
+  principal     = "apigateway.amazonaws.com"
+
+  source_arn = "${aws_apigatewayv2_api.default.execution_arn}/*/*"
+}

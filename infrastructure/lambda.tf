@@ -71,12 +71,3 @@ resource "aws_iam_role_policy_attachment" "dynamodb_default_to_lambda_rest_api" 
   policy_arn = aws_iam_policy.dynamodb_default.arn
   role = aws_iam_role.lambda_rest_api.name
 }
-
-resource "aws_lambda_permission" "rest_api" {
-  statement_id  = "AllowAPIGatewayInvoke"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.rest_api.function_name
-  principal     = "apigateway.amazonaws.com"
-
-  source_arn = "${aws_apigatewayv2_api.default.execution_arn}/*/*"
-}
