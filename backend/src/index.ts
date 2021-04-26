@@ -86,4 +86,4 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         statusCode: 404,
         body: `No handler for routeKey ${routeKey}.`,
     };
-}
+};
