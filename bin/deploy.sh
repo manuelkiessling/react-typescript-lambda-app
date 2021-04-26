@@ -43,7 +43,7 @@ pushd "$DIR/../backend/" || exit
   popd || exit
 popd || exit
 
-pushd "$DIR/../terraform" || exit
+pushd "$DIR/../infrastructure" || exit
   terraform init
   terraform apply -auto-approve -var deployment_number="$DEPLOYMENT_NUMBER"
 popd || exit
