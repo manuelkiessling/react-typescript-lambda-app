@@ -17,7 +17,7 @@ fi
 DEPLOYMENT_NUMBER="$(date -u +%FT%TZ)"
 echo "$DEPLOYMENT_NUMBER" > "$DIR/../deployment_number"
 
-PROJECT_NAME="$(cat "$DIR/../terraform/variables.tf" | grep 'project_name' -A 2 | grep 'default' | cut -d '=' -f 2 | cut -d '"' -f 2)"
+PROJECT_NAME="$(cat "$DIR/../infrastructure/variables.tf" | grep 'project_name' -A 2 | grep 'default' | cut -d '=' -f 2 | cut -d '"' -f 2)"
 
 pushd "$DIR/../frontend" || exit
   rm -rf build
