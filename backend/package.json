@@ -9,6 +9,6 @@
     "typescript": "^4.2.4"
   },
   "scripts": {
-    "build": "rm -rf build && tsc --build tsconfig.json && pushd build && zip rest_api.zip ./* && popd"
+    "build": "rm -rf build && tsc --build tsconfig.json"
   }
 }

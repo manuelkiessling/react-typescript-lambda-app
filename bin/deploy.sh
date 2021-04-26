@@ -33,7 +33,6 @@ popd
 [ "$1" == "frontend" ] && exit 0
 
 pushd "$DIR/../backend/"
-  rm -rf build
   rm -rf node_modules
   nvm install
   nvm use
