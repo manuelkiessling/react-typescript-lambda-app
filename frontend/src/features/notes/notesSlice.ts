@@ -1,27 +1,25 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export interface Note {
-    id: string,
-    content: string
+    readonly id: string,
+    readonly content: string
 }
 
 export interface NotesState {
-    notes: Array<Note>,
-    getNotesOperationIsRunning: boolean,
-    createNoteOperationIsRunning: boolean,
+    readonly notes: Note[],
+    readonly errorMessage: null | string
 }
 
 const initialState: NotesState = {
     notes: [],
-    getNotesOperationIsRunning: false,
-    createNoteOperationIsRunning: false
+    errorMessage: null
 };
 
-export const createNote = createAsyncThunk<Note, { content: string }>(
+export const createNote = createAsyncThunk<Note, { content: string }, { rejectValue: { readonly errorMessage: string, readonly note: Note } }>(
     'notes/create',
     async (arg, thunkAPI) => {
 
-        const note: Note = {id: Math.random().toString(), content: arg.content};
+        const note: Note = { id: Math.random().toString(), content: arg.content };
 
         return await fetch(
             '/api/notes/',
@@ -40,13 +38,13 @@ export const createNote = createAsyncThunk<Note, { content: string }>(
 
             .catch(function (error) {
                 console.error(error);
-                return thunkAPI.rejectWithValue(error.message);
+                return thunkAPI.rejectWithValue({ errorMessage: error.message, note });
             });
     }
 );
 
 
-export const fetchNotes = createAsyncThunk(
+export const fetchNotes = createAsyncThunk<Note[], void, { rejectValue: string }>(
     'notes/fetch',
     async (arg, thunkAPI) => {
         return await fetch(
@@ -73,16 +71,33 @@ export const fetchNotes = createAsyncThunk(
 export const notesSlice = createSlice({
     name: 'notes',
     initialState,
-    reducers: {},
+    reducers: {
+        reset: () => initialState
+    },
     extraReducers: (builder) => {
         builder
             .addCase(createNote.fulfilled, (state, action) => {
                 state.notes.unshift(action.payload);
+                state.errorMessage = null;
             });
+
+        builder
+            .addCase(createNote.rejected, (state, action) => {
+                if (action.payload !== undefined) {
+                    state.notes.unshift(action.payload.note);
+                    state.errorMessage = action.payload.errorMessage;
+                }
+            });
+
 
         builder
             .addCase(fetchNotes.fulfilled, (state, action) => {
                 state.notes = action.payload;
+            });
+
+        builder
+            .addCase(fetchNotes.rejected, (state, action) => {
+                state.errorMessage = action.payload ?? null;
             });
     },
 });

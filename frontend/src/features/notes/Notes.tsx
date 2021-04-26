@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { createNote, fetchNotes } from './notesSlice';
+import { createNote, fetchNotes, notesSlice } from './notesSlice';
 
 export const Notes = () => {
     const reduxState = useAppSelector(state => state);
@@ -14,6 +14,11 @@ export const Notes = () => {
 
     return (
         <div>
+            {
+                reduxState.notes.errorMessage !== null
+                &&
+                <strong>Error: {reduxState.notes.errorMessage}</strong>
+            }
             <h1>Add note</h1>
             <form onSubmit={ (e) => {
                 reduxDispatch(createNote({ content: newNoteContent }));
@@ -23,7 +28,7 @@ export const Notes = () => {
                     type='text'
                     className='form-control'
                     id='create-server-title'
-                    placeholder='Name of new server'
+                    placeholder=''
                     value={newNoteContent}
                     onChange={ (e) => setNewNoteContent(e.target.value) }
                 />
@@ -38,6 +43,11 @@ export const Notes = () => {
                     onClick={() => reduxDispatch(fetchNotes())}
                 >
                     Re-fetch notes from backend
+                </button>
+            </p>
+            <p>
+                <button onClick={ () => reduxDispatch(notesSlice.actions.reset()) }>
+                    Reset
                 </button>
             </p>
             {reduxState.notes.notes.map(note => (
