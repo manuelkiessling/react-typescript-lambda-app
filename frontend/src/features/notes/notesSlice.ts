@@ -15,12 +15,11 @@ const initialState: NotesState = {
     errorMessage: null
 };
 
-export const createNote = createAsyncThunk<Note, { content: string }, { rejectValue: { readonly errorMessage: string, readonly note: Note } }>(
+export const createNote = createAsyncThunk<Note, { readonly content: string }, { rejectValue: { readonly errorMessage: string, readonly note: Note } }>(
     'notes/create',
+
     async (arg, thunkAPI) => {
-
         const note: Note = { id: Math.random().toString(), content: arg.content };
-
         return await fetch(
             '/api/notes/',
             {
